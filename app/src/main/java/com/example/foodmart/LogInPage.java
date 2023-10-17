@@ -1,8 +1,11 @@
 package com.example.foodmart;
 
+import static androidx.fragment.app.FragmentManager.TAG;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +30,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class LogInPage extends AppCompatActivity {
+    private static final String TAG = "MyActivity";
     Button btnSignIn;
 
     GoogleSignInClient mGoogleSignInClient;
@@ -113,57 +117,35 @@ int RC_SIGN_IN=40;
         startActivityForResult(intent,RC_SIGN_IN);
 
     }
-
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
+    }
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
-            Task<GoogleSignInAccount> task=GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuth(account.getIdToken());
-            } catch (ApiException e) {
-                // Handle sign-in failure (e.g., user cancelled the sign-in)
-                e.printStackTrace();
-            }
+            // Signed in successfully, show authenticated UI.
+            Intent intent=new Intent(LogInPage.this,homee.class);
+            startActivity(intent);
+            finish();;
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+
         }
     }
 
 
-
-
-    private void firebaseAuth(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        FirebaseAuth.getInstance().signInWithCredential(credential)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>(){
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                            User users = new User();
-                            users.setUserId(user.getUid());
-                            users.setDisplayName(user.getDisplayName());
-                            users.setEmail(user.getEmail());
-                            FirebaseDatabase.getInstance().getReference().child("User").child(user.getUid()).setValue(users);
-                            Intent intent=new Intent(LogInPage.this,homee.class );
-                            startActivity(intent);
-
-
-
-                        }
-                        else
-                        {
-                            Toast.makeText(LogInPage.this,"Error",Toast.LENGTH_SHORT).show();
-                        }
-
-
-
-                    }});}
     public void startNextActivity(View view) {
         Intent intent = new Intent(this, sign_up.class);
         startActivity(intent);
