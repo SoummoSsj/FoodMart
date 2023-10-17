@@ -1,16 +1,22 @@
 package com.example.foodmart;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -24,71 +30,100 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class LogInPage extends AppCompatActivity {
+public class sign_up extends AppCompatActivity {
     Button btnSignIn;
-
     GoogleSignInClient mGoogleSignInClient;
     ProgressDialog progressDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-//        TextView textView=findViewById(R.id.forget);
-        EditText editText=findViewById(R.id.EMAIL);
-        EditText editText1=findViewById(R.id.editText2);
+        setContentView(R.layout.activity_sign_up);
+        EditText nameEdit=findViewById(R.id.editTextText2);
+        EditText emailEdit=findViewById(R.id.EMAIL);
+        EditText passwordEdit=findViewById(R.id.editText2);
+        EditText confirmEdit=findViewById(R.id.editpass2);
         Button button=findViewById(R.id.Login);
+
+
+
+        // showing the back button in action bar
         FirebaseAuth mAuth=FirebaseAuth.getInstance();
+
+
+
 
         button.setOnClickListener(new View.OnClickListener() {
             /**
-             * LogIn Page Intent Method
+             * SignUp to Firebase
              * @param view
              */
             @Override
             public void onClick(View view) {
-                String mail=editText.getText().toString().trim();
-                String password=editText1.getText().toString().trim();
-                if(mail.isEmpty())
+                String pass=passwordEdit.getText().toString().trim();
+                String pass2=confirmEdit.getText().toString().trim();
+                String name=nameEdit.getText().toString().trim();
+                String email=emailEdit.getText().toString().trim();
+                if(name.isEmpty())
                 {
-                    editText.setError("Email Can not be Empty");
-                    editText.requestFocus();
+                    nameEdit.setError("Name Field is Required");
                 }
-                else if(password.isEmpty())
+                else if(email.isEmpty())
                 {
-                    editText1.setError("Password Can not be Empty");
-                    editText1.requestFocus();
+                    emailEdit.setError("Email Field Is Required");
+                }
+                else if( pass.isEmpty())
+                {
+                    passwordEdit.setError("Please Enter A Password");
+                }
+                else if(pass2.isEmpty())
+                {
+                    confirmEdit.setError("Please Enter The password Again");
+                }
+                else if(!pass.equals(pass2))
+                {
+                    confirmEdit.setError("Password Does not Match");
                 }
                 else
                 {
-                    mAuth.signInWithEmailAndPassword(mail,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         /**
-                         * if user is Authorized the method Takes user to LogIn Page.
+                         * if signup successful this method takes user to homepage
                          * @param task
                          */
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful())
                             {
-                                Intent intent=new Intent(LogInPage.this,homee.class);
+                                Toast.makeText(sign_up.this, "SIGN UP SUCCESSFUL!",Toast.LENGTH_SHORT).show();
+                                DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
+                                String id=FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                                EditText e=findViewById(R.id.editTextText2);
+
+
+                                String name=e.getText().toString().trim();
+
+                                User userInfo=new User(name);
+
+                                reference.child("User").child(id).setValue(userInfo);
+                                Intent intent=new Intent(sign_up.this,homee.class);
                                 startActivity(intent);
                                 finish();
                             }
                             else
                             {
-                                Toast.makeText(LogInPage.this, "Log in Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(sign_up.this, "Log in Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
-
                         }
                     });
-
                 }
             }
         });
         btnSignIn =findViewById(R.id.google);
-        progressDialog=new ProgressDialog(LogInPage.this);
+        progressDialog=new ProgressDialog(sign_up.this);
         progressDialog.setTitle("Creating Account");
         progressDialog.setMessage("We are creatingg your account");
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -104,9 +139,8 @@ public class LogInPage extends AppCompatActivity {
 
             }
         });
-
     }
-int RC_SIGN_IN=40;
+    int RC_SIGN_IN=40;
     private void signIn() {
 
         Intent intent= mGoogleSignInClient.getSignInIntent();
@@ -150,7 +184,7 @@ int RC_SIGN_IN=40;
                             users.setDisplayName(user.getDisplayName());
                             users.setEmail(user.getEmail());
                             FirebaseDatabase.getInstance().getReference().child("User").child(user.getUid()).setValue(users);
-                            Intent intent=new Intent(LogInPage.this,homee.class );
+                            Intent intent=new Intent(sign_up.this,homee.class );
                             startActivity(intent);
 
 
@@ -158,14 +192,14 @@ int RC_SIGN_IN=40;
                         }
                         else
                         {
-                            Toast.makeText(LogInPage.this,"Error",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(sign_up.this,"Error",Toast.LENGTH_SHORT).show();
                         }
 
 
 
                     }});}
     public void startNextActivity(View view) {
-        Intent intent = new Intent(this, sign_up.class);
+        Intent intent = new Intent(this, LogInPage.class);
         startActivity(intent);
     }
 }
