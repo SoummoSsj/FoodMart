@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FoodMart</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="default_web_client_id">10340357413-smsmmhmv52rhlraib2rd060prm62oiki.apps.googleusercontent.com</string>
+</resources>
