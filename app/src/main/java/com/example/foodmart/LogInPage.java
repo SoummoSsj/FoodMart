@@ -46,6 +46,22 @@ public class LogInPage extends AppCompatActivity {
         Button button=findViewById(R.id.Login);
         FirebaseAuth mAuth=FirebaseAuth.getInstance();
 
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            // User is already authenticated, skip the login page.
+            Intent intent = new Intent(LogInPage.this, homee.class);
+            startActivity(intent);
+            finish();
+        }
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if (account != null) {
+            // User is already authenticated with Google, skip the login page.
+            Intent intent = new Intent(LogInPage.this, homee.class);
+            startActivity(intent);
+            finish();
+        }
+
+
         button.setOnClickListener(new View.OnClickListener() {
             /**
              * LogIn Page Intent Method
