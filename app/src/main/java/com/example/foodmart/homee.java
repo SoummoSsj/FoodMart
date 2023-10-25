@@ -28,13 +28,13 @@ public class homee extends AppCompatActivity {
         // Initialize the GoogleSignInClient
         mGoogleSignInClient = YourInitializationMethodHere();
 
-        //Button logout = findViewById(R.id.logout);
-        //logout.setOnClickListener(new View.OnClickListener() {
-            //@Override
-            //public void onClick(View v) {
-                //logout();
-            //}
-        //});
+        Button logout = findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+            }
+        });
     }
 
     private void logout() {
