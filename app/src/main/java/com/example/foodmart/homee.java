@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentContainerView;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -22,17 +24,17 @@ public class homee extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        FragmentContainerView fragmentContainerView = findViewById(R.id.fragmentContainerView);
         // Initialize the GoogleSignInClient
         mGoogleSignInClient = YourInitializationMethodHere();
 
-        Button logout = findViewById(R.id.logout);
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logout();
-            }
-        });
+        //Button logout = findViewById(R.id.logout);
+        //logout.setOnClickListener(new View.OnClickListener() {
+            //@Override
+            //public void onClick(View v) {
+                //logout();
+            //}
+        //});
     }
 
     private void logout() {

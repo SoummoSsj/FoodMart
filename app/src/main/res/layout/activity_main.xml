@@ -4,46 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     tools:context=".MainActivity">
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
+        android:background="@drawable/nav"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menu" />
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <com.denzcoskun.imageslider.ImageSlider
-            android:background="@drawable/banner1"
-            android:id="@+id/image_slider"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:iss_auto_cycle="true"
-            app:iss_period="1000"
-            app:iss_delay="1000"
-            app:iss_text_align="CENTER"
-            tools:ignore="MissingClass" />
-    </androidx.cardview.widget.CardView >
-
-    <Button
-        android:id="@+id/logout"
+    <TextView
+        android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="logout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.919"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="Explore Your Favourite Food"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.316" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView10"
+        app:srcCompat="@drawable/baseline_notifications_none_24" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:navGraph="@navigation/navigation" />
 </androidx.constraintlayout.widget.ConstraintLayout>
