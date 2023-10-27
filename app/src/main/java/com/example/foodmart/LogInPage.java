@@ -47,7 +47,7 @@ public class LogInPage extends AppCompatActivity {
         FirebaseAuth mAuth=FirebaseAuth.getInstance();
 
         FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
+        if (user != null && user.isEmailVerified()) {
             // User is already authenticated, skip the login page.
             Intent intent = new Intent(LogInPage.this, homee.class);
             startActivity(intent);
@@ -90,15 +90,33 @@ public class LogInPage extends AppCompatActivity {
                          */
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful())
-                            {
-                                Intent intent=new Intent(LogInPage.this,homee.class);
-                                startActivity(intent);
-                                finish();
+
+                            if(task.isSuccessful()) {
+                                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                                FirebaseUser firebaseUser = mAuth.getCurrentUser();
+
+                                if (firebaseUser != null && firebaseUser.isEmailVerified()) {
+                                    // User is authenticated with Firebase, allow access to "homee" activity
+                                    Intent intent = new Intent(LogInPage.this, homee.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    // User is not authenticated or email is not verified, handle this case.
+                                    if (firebaseUser != null && !firebaseUser.isEmailVerified()) {
+                                        Toast.makeText(LogInPage.this, "Email is not verified. Please check your email and verify your account" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+
+
+                                    } else {
+                                        // User is not authenticated with Firebase, handle this case (e.g., show an error message).
+                                        Toast.makeText(LogInPage.this, "Please sign up before using Sign-In. " , Toast.LENGTH_SHORT).show();
+
+
+                                    }
+                                }
                             }
                             else
                             {
-                                Toast.makeText(LogInPage.this, "Log in Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LogInPage.this, "Log in Error: " , Toast.LENGTH_SHORT).show();
                             }
 
                         }
@@ -149,17 +167,27 @@ int RC_SIGN_IN=40;
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
-            // Signed in successfully, show authenticated UI.
-            Intent intent=new Intent(LogInPage.this,homee.class);
-            startActivity(intent);
-            finish();;
-        } catch (ApiException e) {
+            // Check if the user is authenticated with Firebase
+
+
+            if (account != null) {
+                // User is authenticated with Firebase, allow access to "homee" activity
+                Intent intent = new Intent(LogInPage.this, homee.class);
+                startActivity(intent);
+                finish();
+            } else {
+                // User is not authenticated or email is not verified, handle this case.
+
+                    // User is not authenticated with Firebase, handle this case (e.g., show an error message).
+                    Toast.makeText(this, "Please sign up before using Sign-In.", Toast.LENGTH_SHORT).show();
+                }
+            } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-
+            Log.w(TAG, "signInResult: failed code=" + e.getStatusCode());
         }
     }
+
 
 
     public void startNextActivity(View view) {
