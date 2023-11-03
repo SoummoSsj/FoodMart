@@ -91,10 +91,13 @@ public class sign_up extends AppCompatActivity {
                                 EditText e = findViewById(R.id.editTextText2);
                                 String name = e.getText().toString().trim();
 
-                                User userInfo = new User(name);
+                                EditText a = findViewById(R.id.EMAIL);
+                                String email = a.getText().toString().trim();
+
+                                User userInfo = new User(name,email);
                                 reference.child("User").child(id).setValue(userInfo);
                             } else {
-                                Toast.makeText(sign_up.this, "Sign Up Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(sign_up.this, "Sign Up Error: " + task.getException().getMessage (), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -152,27 +155,26 @@ public class sign_up extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Google");
-
-
                             final String userId = user.getUid();
                             final String email = user.getEmail();
-                            databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+
+                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                            databaseReference.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.exists()) {
                                         // The email already exists in the database
-                                        // You can handle this situation here
-                                        // For example, display an error message or take appropriate action
                                         Toast.makeText(sign_up.this, "Email already registered", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        // The email does not exist in the database
+                                    }
+
+                                else {
+                                        // The email does not exist in any node
                                         // You can proceed with registration
                                         User users = new User();
                                         users.setUserId(user.getUid());
                                         users.setDisplayName(user.getDisplayName());
                                         users.setEmail(user.getEmail());
-                                        FirebaseDatabase.getInstance().getReference().child("Google").child(user.getUid()).setValue(users);
+                                        databaseReference.child("Google").child(userId).setValue(users);
                                         Intent intent = new Intent(sign_up.this, homee.class);
                                         startActivity(intent);
                                     }
@@ -188,7 +190,9 @@ public class sign_up extends AppCompatActivity {
                         } else {
                             Toast.makeText(sign_up.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    } });
+                    }
+
+               });
 
 
 
