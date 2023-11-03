@@ -24,8 +24,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class sign_up extends AppCompatActivity {
     Button btnSignIn;
@@ -149,20 +152,46 @@ public class sign_up extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Google");
 
-                            User users = new User();
-                            users.setUserId(user.getUid());
-                            users.setDisplayName(user.getDisplayName());
-                            users.setEmail(user.getEmail());
-                            FirebaseDatabase.getInstance().getReference().child("User").child(user.getUid()).setValue(users);
 
-                            Intent intent = new Intent(sign_up.this, homee.class);
-                            startActivity(intent);
+                            final String userId = user.getUid();
+                            final String email = user.getEmail();
+                            databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        // The email already exists in the database
+                                        // You can handle this situation here
+                                        // For example, display an error message or take appropriate action
+                                        Toast.makeText(sign_up.this, "Email already registered", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        // The email does not exist in the database
+                                        // You can proceed with registration
+                                        User users = new User();
+                                        users.setUserId(user.getUid());
+                                        users.setDisplayName(user.getDisplayName());
+                                        users.setEmail(user.getEmail());
+                                        FirebaseDatabase.getInstance().getReference().child("Google").child(user.getUid()).setValue(users);
+                                        Intent intent = new Intent(sign_up.this, homee.class);
+                                        startActivity(intent);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    // Handle any errors that may occur during the database query
+                                    // For example, show an error message or log the error
+                                    Toast.makeText(sign_up.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         } else {
                             Toast.makeText(sign_up.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    }
-                });
+                    } });
+
+
+
     }
 
     public void startNextActivity(View view) {

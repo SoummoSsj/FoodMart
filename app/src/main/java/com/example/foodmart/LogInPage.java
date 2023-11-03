@@ -15,6 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.identity.BeginSignInRequest;
+import com.google.android.gms.auth.api.identity.SignInClient;
+import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -30,21 +33,33 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class LogInPage extends AppCompatActivity {
+
+
     private static final String TAG = "MyActivity";
     Button btnSignIn;
 
     GoogleSignInClient mGoogleSignInClient;
     ProgressDialog progressDialog;
 
+
+    private SignInClient oneTapClient;
+    private BeginSignInRequest signInRequest;
+    private static final int REQ_ONE_TAP = 2;  // Can be any integer unique to the Activity.
+    private boolean showOneTapUI = true;
+    private FirebaseAuth gAuth;
+
+    // ...
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 //        TextView textView=findViewById(R.id.forget);
-        EditText editText=findViewById(R.id.EMAIL);
-        EditText editText1=findViewById(R.id.editText2);
-        Button button=findViewById(R.id.Login);
-        FirebaseAuth mAuth=FirebaseAuth.getInstance();
+        EditText editText = findViewById(R.id.EMAIL);
+        EditText editText1 = findViewById(R.id.editText2);
+        Button button = findViewById(R.id.Login);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null && user.isEmailVerified()) {
@@ -65,25 +80,21 @@ public class LogInPage extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             /**
              * LogIn Page Intent Method
+             *
              * @param view
              */
             @Override
             public void onClick(View view) {
-                String mail=editText.getText().toString().trim();
-                String password=editText1.getText().toString().trim();
-                if(mail.isEmpty())
-                {
+                String mail = editText.getText().toString().trim();
+                String password = editText1.getText().toString().trim();
+                if (mail.isEmpty()) {
                     editText.setError("Email Can not be Empty");
                     editText.requestFocus();
-                }
-                else if(password.isEmpty())
-                {
+                } else if (password.isEmpty()) {
                     editText1.setError("Password Can not be Empty");
                     editText1.requestFocus();
-                }
-                else
-                {
-                    mAuth.signInWithEmailAndPassword(mail,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                } else {
+                    mAuth.signInWithEmailAndPassword(mail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         /**
                          * if user is Authorized the method Takes user to LogIn Page.
                          * @param task
@@ -91,7 +102,7 @@ public class LogInPage extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
-                            if(task.isSuccessful()) {
+                            if (task.isSuccessful()) {
                                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                                 FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
@@ -108,90 +119,84 @@ public class LogInPage extends AppCompatActivity {
 
                                     } else {
                                         // User is not authenticated with Firebase, handle this case (e.g., show an error message).
-                                        Toast.makeText(LogInPage.this, "Please sign up before using Sign-In. " , Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LogInPage.this, "Please sign up before using Sign-In. ", Toast.LENGTH_SHORT).show();
 
 
                                     }
                                 }
-                            }
-                            else
-                            {
-                                Toast.makeText(LogInPage.this, "Log in Error: " , Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(LogInPage.this, "Log in Error: ", Toast.LENGTH_SHORT).show();
                             }
 
                         }
                     });
 
                 }
+
             }
         });
-        btnSignIn =findViewById(R.id.google);
-        progressDialog=new ProgressDialog(LogInPage.this);
+        btnSignIn = findViewById(R.id.google);
+        progressDialog = new ProgressDialog(LogInPage.this);
         progressDialog.setTitle("Creating Account");
-        progressDialog.setMessage("We are creatingg your account");
+        progressDialog.setMessage("We are creating your account");
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
+
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signIn();
-
             }
         });
 
+
     }
-int RC_SIGN_IN=40;
+    int RC_SIGN_IN = 40;
+
     private void signIn() {
-
-        Intent intent= mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(intent,RC_SIGN_IN);
-
+        Intent intent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(intent, RC_SIGN_IN);
     }
+
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
-        }
-    }
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-
-            // Check if the user is authenticated with Firebase
-
-
-            if (account != null) {
-                // User is authenticated with Firebase, allow access to "homee" activity
-                Intent intent = new Intent(LogInPage.this, homee.class);
-                startActivity(intent);
-                finish();
-            } else {
-                // User is not authenticated or email is not verified, handle this case.
-
-                    // User is not authenticated with Firebase, handle this case (e.g., show an error message).
-                    Toast.makeText(this, "Please sign up before using Sign-In.", Toast.LENGTH_SHORT).show();
-                }
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuth(account.getIdToken());
             } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w(TAG, "signInResult: failed code=" + e.getStatusCode());
+                e.printStackTrace();
+            }
         }
     }
 
+    private void firebaseAuth(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        FirebaseAuth.getInstance().signInWithCredential(credential)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+                            Intent intent = new Intent(LogInPage.this, homee.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(LogInPage.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
 
     public void startNextActivity(View view) {
         Intent intent = new Intent(this, sign_up.class);
         startActivity(intent);
-    }
-}
+    }}

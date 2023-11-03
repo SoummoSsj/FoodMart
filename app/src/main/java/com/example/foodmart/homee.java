@@ -89,6 +89,7 @@ public class homee extends AppCompatActivity {
         }
 
         // Sign out from Google (if signed in with Google)
+        FirebaseAuth.getInstance().signOut();
         mGoogleSignInClient.signOut()
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
