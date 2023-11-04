@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace 'com.example.foodmart'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.example.foodmart"
         minSdk 21
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -25,9 +25,10 @@ android {
         }
     }
 
-    buildFeatures{
-        viewBinding true
-    }
+    buildFeatures
+            {
+                viewBinding true
+            }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -55,4 +56,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:20.2.2'
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+
+    implementation 'javax.mail:javax.mail-api:1.6.2'
+    //implementation 'com.sun.mail:android-mail:1.6.2'
+   implementation 'com.sun.mail:android-activation:1.6.2'
 }
+
