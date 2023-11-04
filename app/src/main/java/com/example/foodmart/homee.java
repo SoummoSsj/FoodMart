@@ -24,7 +24,7 @@ public class homee extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FragmentContainerView fragmentContainerView = findViewById(R.id.fragmentContainerView);
+
         // Initialize the GoogleSignInClient
         mGoogleSignInClient = YourInitializationMethodHere();
 
