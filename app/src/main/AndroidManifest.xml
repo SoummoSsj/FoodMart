@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="FoodMart"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Project">
+        <activity
+            android:name=".Activity.Payment_win"
+            android:exported="false" />
+        <activity
+            android:name=".raider.rider_settings"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Paywin"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.ProfileSettings"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Notification_user"
+            android:exported="false" />
+        <activity
+            android:name=".raider.Order_Raider"
+            android:exported="false" />
+        <activity
+            android:name=".raider.Raider_notifications"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Add_Item"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Restaurant_Profile"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Admin_Home"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.AddMyRestaurant"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Pending_Orders_front"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Pending_Orders"
+            android:exported="false" />
+        <activity
+            android:name=".raider.Raider_Home"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.SearchResultsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Edit_Profile"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.MarkerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Map"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Order_Confirm"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Payment_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Profile_Info"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.sign_up"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.LogInPage"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.StartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.IntroActivity"
+            android:exported="false" />
+        <activity android:name=".Activity.CartListActivity" />
+        <activity android:name=".Activity.ShowDetailActivity" />
+        <activity
+            android:name=".Activity.Activity_Splash"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activity.MainActivity" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/my_map_api" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>

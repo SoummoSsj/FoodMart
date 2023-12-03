@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">project</string>
+    <string name="my_map_api">AIzaSyCq1nEOiK_YCr3Q6UZZXb_HaMkK_DbbX9Y</string>
+    <!--    <string name="default_web_client_id">10340357413-smsmmhmv52rhlraib2rd060prm62oiki.apps.googleusercontent.com</string>-->
+    <string name="head">This will show many times</string>
+    <string name="h">$5</string>
+    <string name="total_amount">Total Amount: $%s</string>
+</resources>
