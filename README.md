@@ -1,35 +1,99 @@
-# FoodMart
+# FoodMart – Android Food Delivery App
 
-FoodMart is an online food delivery system designed for Android devices. It offers a user-friendly experience, real-time tracking using Google Maps, and secure payment processing via Stripe. The app is built to enhance customer satisfaction by addressing common issues in food delivery, such as delays.
+**FoodMart** is a user-friendly online food delivery system built for Android devices. Designed to enhance the customer experience, it features real-time delivery tracking via Google Maps, secure authentication, and payment processing using Stripe. The app addresses common food delivery issues like delays and miscommunication through robust role-based access and an intuitive interface.
+
+---
 
 ## Features
 
 ### User Roles
-- **Admin:** Manage multiple restaurants and their menus.
-- **Manager:** Handle specific restaurant operations, including orders and menus.
-- **Rider:** Deliver orders and share real-time location.
-- **Customer:** Browse food, place orders, and track deliveries.
+- **Admin** – Manage multiple restaurants and menus.
+- **Manager** – Handle restaurant orders, menu items, and kitchen workflow.
+- **Rider** – Deliver orders and update live location via Google Maps.
+- **Customer** – Browse food items, place orders, and track deliveries.
 
 ### Core Functionality
-- **Real-Time Tracking:** Google Maps integration for tracking deliveries and viewing restaurant locations.
-- **Secure Authentication:** Firebase and Google authentication for user registration and login.
-- **Payment Options:** Cash on delivery or online payments simulated via Stripe.
-- **Penalty System:** Allows customers to apply penalties for late deliveries.
-- **Dynamic Cart System:** Seamless food selection and checkout.
+- Real-Time Tracking – Google Maps integration for order delivery tracking and restaurant locations.
+- Secure Authentication – Login via Firebase or Google Sign-In.
+- Payment Options – Cash on Delivery and online payment through Stripe (simulated).
+- Penalty System – Customers can apply penalties for late deliveries.
+- Dynamic Cart System – Add/remove items, update quantities, and proceed to smooth checkout.
 
-## System Design
-FoodMart follows a **Waterfall Development Model**:
-1. **Requirements Gathering**: Analyzing existing food delivery systems.
-2. **Design**: Creating UI mockups and database structures.
-3. **Development**: Building the app in Java using Android Studio.
-4. **Testing**: Resolving bugs through iterative testing on various Android devices.
-5. **Deployment**: Delivering a stable version.
-6. **Maintenance**: Future updates and problem resolution.
+---
 
-### Tools and Technologies
-- **Android Studio**: Primary development environment.
-- **Java**: Programming language for app development.
-- **Firebase**: Authentication and real-time database.
-- **Google Maps API**: Real-time tracking.
-- **Stripe**: Simulated online payment processing.
-- **GitHub**: Version control and team collaboration.
+## UI Design
+
+### Login & Registration  
+![Login Screen](images/ui_login.png)
+
+### Home & Food Menu  
+![Home Screen](images/ui_home.png)
+
+### Cart & Checkout  
+![Cart Screen](images/ui_cart.png)
+
+### Real-Time Order Tracking  
+![Tracking Screen](images/ui_tracking.png)
+
+> All UI designs are located in the `images/` folder.
+
+---
+
+## App Flow Chart
+
+The following flow chart demonstrates the process flow of the FoodMart application:
+
+![App Flow Chart](images/flow_chart.png)
+
+---
+
+## System Design & Development Model
+
+FoodMart follows the Waterfall Development Model:
+
+1. **Requirements Gathering** – Research and analysis of market-leading food delivery apps.
+2. **Design** – UI mockups, wireframes, and database architecture.
+3. **Development** – Full-stack implementation using Java and Firebase in Android Studio.
+4. **Testing** – Rigorous testing across Android devices to ensure performance and reliability.
+5. **Deployment** – Final release of the stable APK.
+6. **Maintenance** – Continuous updates, bug fixes, and user feedback integration.
+
+---
+
+## Tech Stack & Tools
+
+| Component             | Technology                        |
+|----------------------|------------------------------------|
+| Frontend             | Java (Android Studio)              |
+| Authentication       | Firebase Authentication, Google Sign-In |
+| Database             | Firebase Realtime Database         |
+| Tracking             | Google Maps API                    |
+| Payments             | Stripe API (simulated)             |
+| Version Control      | GitHub                             |
+
+---
+
+## Installation & Setup
+
+Follow these steps to set up and run the FoodMart app locally:
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/FoodMart.git
+2. **Open in Android Studio.**
+
+3. **Configure Firebase:**
+
+     - Add google-services.json to your app/ directory.
+
+     - Enable Email/Password and Google Authentication in Firebase Console.
+
+4. **Set up Google Maps:**
+
+     - Get an API key from Google Cloud Console.
+
+     - Add the API key to AndroidManifest.xml.
+
+5. **Run the app on your emulator or Android device.**
+
+
