@@ -23,19 +23,62 @@
 
 ## UI Design
 
-### Login & Registration  
-![Login Screen](images/ui_login.png)
+### Splash Screen
+![Splash Screen](Ui_images/splash.PNG)
 
-### Home & Food Menu  
-![Home Screen](images/ui_home.png)
+### Start Activity
+![Start Activity](Ui_images/splash.PNG)
 
-### Cart & Checkout  
-![Cart Screen](images/ui_cart.png)
+### Login
+![Login](Ui_images/login.PNG)
 
-### Real-Time Order Tracking  
-![Tracking Screen](images/ui_tracking.png)
+### Sign Up
+![Sign Up](Ui_images/login.PNG)
 
-> All UI designs are located in the `images/` folder.
+### Home Page
+![Home Page](Ui_images/homepage.PNG)
+
+### Food Details
+![Food Details](Ui_images/homepage.PNG)
+
+### Cart
+![Cart](Ui_images/cart.PNG)
+
+### Payment Window
+![Payment Window](Ui_images/cart.PNG)
+
+### Stripe Payment
+![Stripe Payment](Ui_images/stripe.PNG)
+
+### Stripe Payment Confirmation
+![Stripe Payment Confirmation](Ui_images/stripe.PNG)
+
+### Nearby Restaurants with Live Rider Location
+![Nearby Restaurants](Ui_images/riderliveloc.PNG)
+
+### Update Profile
+![Profile Update](Ui_images/updateprofile.PNG)
+
+### See Restaurant Profile
+![Restaurant Profile](Ui_images/restaurantdet.PNG)
+
+### Add Restaurant
+![Add Restaurant](Ui_images/restaurantdet.PNG)
+
+### Special Privileges (Admin Dashboard)
+![Special Privileges](Ui_images/restaurantdet.PNG)
+
+### Pending Orders
+![Pending Orders](Ui_images/foodorder.PNG)
+
+### Order Details
+![Order Details](Ui_images/foodorder.PNG)
+
+### Adding Menu
+![Add Menu](Ui_images/foodorder.PNG)
+
+### Delivery Order with Map Tracking
+![Delivery Tracking](Ui_images/orderdet.PNG)
 
 ---
 
