@@ -23,35 +23,20 @@
 
 ## UI Design
 
-### Splash Screen
+### Splash Screen & Start Activity
 ![Splash Screen](Ui_images/splash.PNG)
 
-### Start Activity
-![Start Activity](Ui_images/splash.PNG)
-
-### Login
+### Login & Sign Up
 ![Login](Ui_images/login.PNG)
 
-### Sign Up
-![Sign Up](Ui_images/login.PNG)
-
-### Home Page
+### Home Page & Food Details
 ![Home Page](Ui_images/homepage.PNG)
 
-### Food Details
-![Food Details](Ui_images/homepage.PNG)
-
-### Cart
+### Cart & Payment Window
 ![Cart](Ui_images/cart.PNG)
-
-### Payment Window
-![Payment Window](Ui_images/cart.PNG)
 
 ### Stripe Payment
 ![Stripe Payment](Ui_images/stripe.PNG)
-
-### Stripe Payment Confirmation
-![Stripe Payment Confirmation](Ui_images/stripe.PNG)
 
 ### Nearby Restaurants with Live Rider Location
 ![Nearby Restaurants](Ui_images/riderliveloc.PNG)
@@ -59,23 +44,11 @@
 ### Update Profile
 ![Profile Update](Ui_images/updateprofile.PNG)
 
-### See Restaurant Profile
+### See Restaurant Profile & Add Restaurant & Add Restaurant
 ![Restaurant Profile](Ui_images/restaurantdet.PNG)
 
-### Add Restaurant
-![Add Restaurant](Ui_images/restaurantdet.PNG)
-
-### Special Privileges (Admin Dashboard)
-![Special Privileges](Ui_images/restaurantdet.PNG)
-
-### Pending Orders
+### Pending Orders & Order Details &  Adding Menu
 ![Pending Orders](Ui_images/foodorder.PNG)
-
-### Order Details
-![Order Details](Ui_images/foodorder.PNG)
-
-### Adding Menu
-![Add Menu](Ui_images/foodorder.PNG)
 
 ### Delivery Order with Map Tracking
 ![Delivery Tracking](Ui_images/orderdet.PNG)
@@ -86,7 +59,7 @@
 
 The following flow chart demonstrates the process flow of the FoodMart application:
 
-![App Flow Chart](images/flow_chart.png)
+![App Flow Chart](Ui_images/flowchart.PNG)
 
 ---
 
